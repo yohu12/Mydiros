@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.diros.mapper.PostMapper">
+<insert id="insert" parameterType="Post" keyProperty="postId"  keyColumn="post_id">
+
+		insert into 
+		post(
+		forum_id,
+		title,
+		create_dt,
+		lost_mdy_dt,
+		user_id,
+		content,
+		type,
+		state) 
+		values ( 
+		#{forum.id,jdbcType=DECIMAL},
+		#{postTitle,jdbcType=VARCHAR},
+		#{createDt,jdbcType=TIMESTAMP},
+		#{lostMdyDt,jdbcType=TIMESTAMP},
+		#{createUser.userId,jdbcType=VARCHAR},
+		#{postContent,jdbcType=LONGVARCHAR},
+		#{type,jdbcType=DECIMAL},
+		#{state,jdbcType=DECIMAL}
+		);
+		
+		<selectKey keyProperty="postId" resultType="int" order="AFTER">
+
+			select LAST_INSERT_ID() 
+
+		</selectKey> 
+</insert>
+
+<resultMap type="post" id="postResultMap">
+	<id property="postId" column="post_id" />  
+	<result property="postTitle" column="title" />
+	<result property="createDt" column="create_dt" />
+	<result property="lostMdyDt" column="lost_mdy_dt" />
+	<result property="postContent" column="content" />
+	<result property="type" column="type" />
+	<result property="state" column="p_state" /> 
+	<association property="createUser" column="post.user_id"  resultMap="com.diros.mapper.UserMapper.userResultMap"/> 
+	<association property="forum" column="post.forum_id" resultMap="com.diros.mapper.ForumMapper.forumResultMap"/>
+</resultMap>
+	<!-- 修改 -->
+	<update id="update" parameterType="Post">
+		update Post
+		<set>
+			 <if test="forumId != null">
+				forum_id = #{forumId,jdbcType=DECIMAL},
+			</if> 
+			
+				<if test="postTitle != null">
+				title = #{postTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="createDt != null">
+				create_dt = #{createDt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lostMdyDt != null">
+				lost_mdy_dt = #{lostMdyDt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null">
+				user_id = #{createUser,jdbcType=DECIMAL},
+			</if>
+			<if test="postContent != null">
+				content = #{postContent,jdbcType=LONGVARCHAR},
+			</if>
+				<if test="type != null">
+				type = #{type,jdbcType=DECIMAL},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where post_id=#{postId}
+	</update>
+	
+	<select id="basicLogin" parameterType="User" resultType="User">
+		select * from user where name=#{name} and pword=#{pword}
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from Post where post_id=#{userId}
+	</delete>
+	<!-- 总查询 -->
+	<select id="selectAll" resultMap="postResultMap">
+	  select post.*, user.*,forum.*,user.state u_state,post.state p_state,forum.state f_state
+  
+		from post 
+		left join user on post.user_id=user.user_id
+		left join forum on post.forum_id=forum.id 
+	</select>
+	<!-- 通过id查询 -->
+	<select id="findById" parameterType="int" resultMap="postResultMap">
+		select post.*, user.*,forum.*,user.state u_state,post.state p_state,forum.state f_state
+		from post 
+			left join user on post.user_id=user.user_id
+			left join forum on post.forum_id=forum.id
+		where post_id=#{postId}
+	
+	</select>
+	<!-- 通过用户Id查找 -->
+	<select id="findByUser" parameterType="int" resultMap="postResultMap">
+		select post.*, user.*,forum.*,user.state u_state,post.state p_state,forum.state f_state
+		from post 
+			left join user on post.user_id=user.user_id
+			left join forum on post.forum_id=forum.id
+		 
+		 where post.user_id=#{user_id}
+	</select>
+	<!-- 通过关注用户Id查找 -->
+	<select id="findByFavouriteUser" parameterType="Map" resultMap="postResultMap">
+		select post.*, user.*,forum.*,user.state u_state,post.state p_state,forum.state f_state
+		from post 
+			left join user on post.user_id=user.user_id
+			left join forum on post.forum_id=forum.id
+			where    <![CDATA[ DATE_SUB(CURDATE(), INTERVAL #{days} DAY)<= date(create_dt)  ]]>  and post.user_id in
+		 <foreach item="userId" collection="userList" open="(" separator="," close=")">
+              #{userId}
+       </foreach> 
+	</select>
+	
+	<select id="findPostCollectionUser" parameterType="int" >
+		select count(*) collectCount from praise_map where post_id=#{postId} and type=1	
+	</select>
+	<!-- 分页查询 -->
+	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
+ 	 <![CDATA[	SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from Tem order by id asc
+				) T WHERE  ROWNUM <= 10) WHERE RN > 1
+ 	  ]]>
+	</select> -->
+	<!-- 查询总数 -->
+	<select id="count"  resultType="int">
+		select count(*) FROM post;
+	</select>
+	<!-- 模糊查询包含分页 -->
+	<!-- <select id="selectByNameAndKey"  resultType="Bpm">
+		SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from(
+		select * from BPM 
+		<where>
+			<if test="bpm_name != null">
+				bpm_name like '%'||#{name}||'%' and
+			</if>
+			<if test="bpm_code != null">
+				bpm_code like '%'||#{key}||'%'
+			</if>
+		</where>
+		<![CDATA[ 
+		) T WHERE  ROWNUM <= #{paging.startRow,jdbcType=DECIMAL}+#{paging.counts,jdbcType=DECIMAL}) 
+				WHERE RN > #{paging.startRow,jdbcType=DECIMAL}
+				]]>
+	</select> -->
+
+	<!-- <select id="getAllPost" resultType="Post">
+		select post.post_id newsId, title newsTitle, content newsContext,post.create_who createWho ,post.praise_count praiseCount,post.collect_count collectCount
+		from post,content,user where post.type=1 and content.content_id=post.content_id and user.user_id=post.create_who;
+
+	</select> -->
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.diros.mapper.ForumMapper">
+
+<insert id="insert" parameterType="Forum">
+	insert into FORUM(R_ID,F_NAME,STATE,F_REMARK)
+		values ( 
+		#{rId,jdbcType=DECIMAL},
+		#{fName,jdbcType=VARCHAR},
+		#{state,jdbcType=DECIMAL},
+		#{fRemark,jdbcType=VARCHAR}
+		)
+</insert>
+<resultMap type="forum" id="forumResultMap">
+	<id property="id" column="id" />  
+    <result property="rId" column="R_ID" />
+	<result property="fName" column="F_NAME" />
+	<result property="state" column="f_state" />
+	<result property="fRemark" column="F_REMARK"/>
+	<result property="fType" column="F_TYPE"/>
+	<result property="fCode" column="F_CODE"/>
+	<result property="fLevel" column="F_LEVEL"/>
+	<result property="checkType" column="CHECK_TYPE"/>
+</resultMap>
+	<!-- 修改 -->
+	<update id="update" parameterType="Forum">
+		update FORUM
+		<set>
+			<if test="fName != null">
+				F_NAME = #{fName,jdbcType=DECIMAL},
+			</if>
+			<if test="rId != null">
+				R_ID = #{rId,jdbcType=VARCHAR},
+			</if>					
+			<if test="state != null">
+				STATE = #{state,jdbcType=DECIMAL}
+			</if>			
+			<if test="f_remark != null">
+				F_REMARK = #{f_remark,jdbcType=DECIMAL}
+			</if>			
+		</set>
+		where id=#{id}
+	</update>
+		
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from FORUM where id=#{id}
+	</delete>
+	<!-- 总查询 -->
+	<select id="selectAll" resultType="Forum">
+		select id id, r_id rId,f_name fName, state state, f_remark fRemark, f_type fType, f_code fCode, f_level fLevel from FORUM
+	</select>
+	<!-- 通过id查询 -->
+	<select id="findById" parameterType="int" resultType="Forum">
+		select * from FORUM where id=#{id}
+	</select>
+	<!-- 分页查询 -->
+	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
+ 	 <![CDATA[	SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from Tem order by id asc
+				) T WHERE  ROWNUM <= 10) WHERE RN > 1
+ 	  ]]>
+	</select> -->
+	<!-- 查询总数 -->
+	<select id="count"  resultType="int">
+		select count(*) FROM FORUM
+	</select>
+	<!-- 模糊查询包含分页 -->
+	<!-- <select id="selectByNameAndKey"  resultType="Bpm">
+		SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from(
+		select * from BPM 
+		<where>
+			<if test="bpm_name != null">
+				bpm_name like '%'||#{name}||'%' and
+			</if>
+			<if test="bpm_code != null">
+				bpm_code like '%'||#{key}||'%'
+			</if>
+		</where>
+		<![CDATA[ 
+		) T WHERE  ROWNUM <= #{paging.startRow,jdbcType=DECIMAL}+#{paging.counts,jdbcType=DECIMAL}) 
+				WHERE RN > #{paging.startRow,jdbcType=DECIMAL}
+				]]>
+	</select> -->
+
+
+</mapper>

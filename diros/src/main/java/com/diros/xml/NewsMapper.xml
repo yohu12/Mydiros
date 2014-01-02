@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.diros.mapper.NewsMapper">
+
+<insert id="insert" parameterType="News">
+	insert into News(title,content,create_time,user_id,replay_time,state)
+		values ( 
+		#{title,jdbcType=VARCHAR},
+		#{content},
+		now(),
+		#{userId,jdbcType=DECIMAL},
+		#{replayTime},
+		#{state,jdbcType=DECIMAL}
+		)
+</insert>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="News">
+		update News
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=DECIMAL},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>					
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=dateTime}
+			</if>			
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=DECIMAL}
+			</if>			
+			<if test="replayTime != null">
+				replay_time = now()
+			</if>			
+			<if test="state != null">
+				state = #{state,jdbcType=DECIMAL}
+			</if>			
+		</set>
+		where id=#{id}
+	</update>
+		
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from News where id=#{id}
+	</delete>
+	<!-- 总查询 -->
+	<select id="selectAll" resultType="News">
+		select n.id id, n.user_id userId,n.create_time createTime,n.replay_time replayTime,n.content content,n.title title ,n.state state from News n
+	</select>
+	<!-- 通过id查询 -->
+	<select id="findById" parameterType="int" resultType="News">
+		select n.id id, n.user_id userId,n.create_time createTime,n.replay_time replayTime,n.content content,n.title title ,n.state state from News n where id=#{id}
+	</select>
+	<!-- 分页查询 -->
+	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
+ 	 <![CDATA[	SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from Tem order by id asc
+				) T WHERE  ROWNUM <= 10) WHERE RN > 1
+ 	  ]]>
+	</select> -->
+	<!-- 查询总数 -->
+	<select id="count"  resultType="int">
+		select count(*) FROM News
+	</select>
+	<!-- 模糊查询包含分页 -->
+	<!-- <select id="selectByNameAndKey"  resultType="Bpm">
+		SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from(
+		select * from BPM 
+		<where>
+			<if test="bpm_name != null">
+				bpm_name like '%'||#{name}||'%' and
+			</if>
+			<if test="bpm_code != null">
+				bpm_code like '%'||#{key}||'%'
+			</if>
+		</where>
+		<![CDATA[ 
+		) T WHERE  ROWNUM <= #{paging.startRow,jdbcType=DECIMAL}+#{paging.counts,jdbcType=DECIMAL}) 
+				WHERE RN > #{paging.startRow,jdbcType=DECIMAL}
+				]]>
+	</select> -->
+
+
+</mapper>
