@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.diros.mapper.FastThought">
+
+<insert id="insert" parameterType="FastThought">
+	insert into farst_thought(thought_title,user_id,create_dt,last_mdy_dt,reply_dt,status,context)
+		values ( 
+		#{thoughtTitle,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{createDT,jdbcType=dateTime},
+		#{lastMdyDt,jdbcType=dateTime},
+		#{replyDt,jdbcType=dateTime},
+		#{status,jdbcType=DECIMAL},
+		#{context,jdbcType=VARCHAR}
+		)
+</insert>
+<resultMap type="forum" id="forumResultMap">
+	<id property="id" column="id" />  
+    <result property="thoughtTitle" column="thought_title" />
+	<result property="userId" column="user_id" />
+	<result property="createDt" column="create_dt" />
+	<result property="lastMdyDt" column="last_mdy_dt"/>
+	<result property="replyDt" column="reply_dt"/>
+	<result property="status" column="status"/>
+	<result property="context" column="context"/>
+
+</resultMap>
+	<!-- 修改 -->
+	<update id="update" parameterType="FastThought">
+		update FORUM
+		<set>
+			<if test="thoughtTitle != null">
+				thought_title = #{thoughtTitle,jdbcType=DECIMAL},
+			</if>
+			<if test="lastMdyDt != null">
+				last_mdy_dt = #{lastMdyDt,jdbcType=VARCHAR},
+			</if>					
+			<if test="replyDt != null">
+				reply_dt = #{replyDt,jdbcType=DECIMAL}
+			</if>			
+			<if test="status != null">
+				status = #{status,jdbcType=DECIMAL}
+			</if>
+			<if test="context != null">
+				context = #{context,jdbcType=DECIMAL}
+			</if>				
+		</set>
+		where id=#{id}
+	</update>
+		
+	<!-- 删除 -->
+	<delete id="delete" parameterType="int">
+		delete from FORUM where id=#{id}
+	</delete>
+	<!-- 总查询 -->
+	<select id="selectAll" resultType="Forum">
+		select id id,thought_title, user_id, create_dt, last_mdy_dt, reply_dt, status, context  from farst_thought
+	</select>
+	<!-- 通过id查询 -->
+	<select id="findById" parameterType="int" resultType="Forum">
+		select * from farst_thought where id=#{id}
+	</select>
+	<!-- 分页查询 -->
+	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
+ 	 <![CDATA[	SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from Tem order by id asc
+				) T WHERE  ROWNUM <= 10) WHERE RN > 1
+ 	  ]]>
+	</select> -->
+	<!-- 查询总数 -->
+	<select id="count"  resultType="int">
+		select count(*) FROM farst_thought
+	</select>
+	<!-- 模糊查询包含分页 -->
+	<!-- <select id="selectByNameAndKey"  resultType="Bpm">
+		SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
+				select * from(
+		select * from BPM 
+		<where>
+			<if test="bpm_name != null">
+				bpm_name like '%'||#{name}||'%' and
+			</if>
+			<if test="bpm_code != null">
+				bpm_code like '%'||#{key}||'%'
+			</if>
+		</where>
+		<![CDATA[ 
+		) T WHERE  ROWNUM <= #{paging.startRow,jdbcType=DECIMAL}+#{paging.counts,jdbcType=DECIMAL}) 
+				WHERE RN > #{paging.startRow,jdbcType=DECIMAL}
+				]]>
+	</select> -->
+
+
+</mapper>
