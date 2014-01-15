@@ -182,8 +182,8 @@ body {
 					<li class="dis_new"><a href="">News</a></li>
 					<li class="dis_show"><a href="">�丝秀</a></li>
 					<li class="dis dis_fs"><a href="">�丝发烧</a></li>
-					<li class="dis dis_fss"><a href="">发烧60S</a></li>
-					<li class="dis dis_tc"><a href="">�丝同城</a></li>
+					<li class="dis dis_fss"><a href="<%=basePath %>/fastThought/showList">发烧60S</a></li>
+					<li class="dis dis_tc"><a href="">屌丝同城</a></li>
 					<li class="dis dis_chy"><a href="">创业屋</a></li>
 					<li class="dis dis_que"><a href="">创业问</a></li>
 					<li class="dis_new dis_cy"><a href="">创意</a></li>
@@ -224,8 +224,8 @@ body {
 				<div style="clear: both"></div>
 			</div>
 			<div class="zc_dl">
-				<a href="" style="background: url(images/icon-12.gif) no-repeat;">注册</a>
-				<a href="" style="background: url(images/icon-13.gif) no-repeat;">忘记密码？</a>
+				<a href="<%=basePath %>/user/showRegister" style="background: url(images/icon-12.gif) no-repeat;">注册</a>
+				<a href="<%=basePath %>/user/showModifyPassword" style="background: url(images/icon-13.gif) no-repeat;">忘记密码？</a>
 			</div>
 		</div>
 	</div>
