@@ -1,0 +1,13 @@
+{
+  "consumerKey": "xc6zvJMM5ec9rq9H",
+  "consumerSecret": "jUKMfeikiYPjEUSL",
+  "oauth_token": "00f0615e50b018caab4afa99",
+  "oauth_token_secret": "b85960f94ddf4874a18d55c9a025d49d",
+  "userName": "82370288@qq.com",
+  "password": "San12guo",
+  "root": "app_folder",
+  "proxyHost": "",
+  "proxyPort": "0",
+  "authType": "smart",
+  "configFile": "config.json"
+}
