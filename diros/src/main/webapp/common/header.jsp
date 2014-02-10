@@ -16,7 +16,7 @@
 			  </div>
 			  <div class="nav">
 			    <ul>
-				  <li><a href="">首页</a></li><li id="nav_li"></li>
+				  <li><a href="<%=basePath %>">首页</a></li><li id="nav_li"></li>
 				  <li><a href="">I'M Diors</a></li><li id="nav_li"></li>
 				  <li><a href="">Diors发烧友</a></li><li id="nav_li"></li>
 				  <li><a href="">创业屋</a></li>

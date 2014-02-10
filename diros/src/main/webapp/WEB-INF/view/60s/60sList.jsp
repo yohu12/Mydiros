@@ -11,34 +11,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>css/style.css" />
 </head>
 <body>
-<div class="top">
-  <div class="top_center">
-    <div class="top_center_d"><img src="<%=basePath %>images/pic01.jpg" /></div>
-	<div class="top_center_main">
-	  <div class="top_center_logo">
-	    <a href=""><img src="<%=basePath %>images/logo.png" /></a>
-		<span>
-		  rdj123 　�丝六级<br />
-		  <a href="">个人中心</a> | <a href="">同城</a>
-		</span>
-	  </div>
-	  <div class="nav">
-	    <ul>
-		  <li><a href="">首页</a></li><li id="nav_li"></li>
-		  <li><a href="">HI �丝</a></li><li id="nav_li"></li>
-		  <li><a href="">Diors发烧友</a></li><li id="nav_li"></li>
-		  <li><a href="">创业屋</a></li>
-		</ul>
-		<span>
-		  <a href="">发现</a>  |
-		  <a href="">发帖</a>
-		</span>
-	  </div>
-	</div>
-	<div class="top_center_ad"><a href=""><img src="<%=basePath %>images/pic02.jpg" /></a></div>
-	<div style="clear:both"></div>
-  </div>
-</div>
+<jsp:include page="/common/header.jsp" />
 
 <div class="fs_ds">
   <ul>
@@ -48,7 +21,7 @@
 </div>
 
 
-<div class="position"><a href="">I'M Diors</a> > <a href="">Diors 发烧友</a> > <a href="">发烧60S</a> > </div>
+<div class="position"><a href="<%=basePath %>">首页</a> ><!-- <a href="">I'M Diors</a> > <a href="">Diors 发烧友</a> > -->  <a href="<%=basePath %>/fastThought/showList">发烧60S</a> > <a href="<%=basePath %>/fastThought/showDetail?Id=${fastThought.id}">${fastThought.thoughtTitle }</a> </div>
 
 
 <div class="content">
@@ -68,7 +41,7 @@
 		    <ul>
 			  <li style=" font-size:24px; color:#313131;"><a href="<%=basePath %>/fastThought/showDetail?Id=${fastThought.id}">${fastThought.thoughtTitle}</a><span style="font-size:24px; color:#e70050; float:right; clear:both; position:absolute; top:10px; right:10px;">#1</span>
 			  </li>
-			  <li>${fastThought.userId}  ${fastThought.createDt} <span style="float:right; position:absolute; right:10px; top:40px;"><a href="">评论</a> | <a href="">赞</a> | <a href="">收藏</a></span></li>
+			  <li>${fastThought.user.name}  ${fastThought.createDt} <span style="float:right; position:absolute; right:10px; top:40px;"><a href="">评论</a> | <a href="">赞</a> | <a href="">收藏</a></span></li>
 			</ul> 
 		  </div>
 		  <div class="tongcheng_detail">

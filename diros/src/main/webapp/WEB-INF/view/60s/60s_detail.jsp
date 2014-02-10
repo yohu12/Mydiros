@@ -10,34 +10,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath %>css/style.css" />
 </head>
 <body>
-<div class="top">
-  <div class="top_center">
-    <div class="top_center_d"><img src="<%=basePath %>images/pic01.jpg" /></div>
-	<div class="top_center_main">
-	  <div class="top_center_logo">
-	    <a href=""><img src="images/logo.png" /></a>
-		<span>
-		  rdj123 　�丝六级<br />
-		  <a href="">个人中心</a> | <a href="">同城</a>
-		</span>
-	  </div>
-	  <div class="nav">
-	    <ul>
-		  <li><a href="">首页</a></li><li id="nav_li"></li>
-		  <li><a href="">I'M Diors</a></li><li id="nav_li"></li>
-		  <li><a href="">Diors发烧友</a></li><li id="nav_li"></li>
-		  <li><a href="">创业屋</a></li>
-		</ul>
-		<span>
-		  <a href="">发现</a>  |
-		  <a href="">发帖</a>
-		</span>
-	  </div>
-	</div>
-	<div class="top_center_ad"><a href=""><img src="<%=basePath %>images/pic02.jpg" /></a></div>
-	<div style="clear:both"></div>
-  </div>
-</div>
+<jsp:include page="/common/header.jsp" />
 
 <div class="fs_ds">
   <ul>
@@ -46,7 +19,7 @@
   </ul>
 </div>
 
-<div class="position"><a href="">I'M Diors</a> > <a href="">Diors 发烧友</a> >  <a href="">发烧60S</a> > <a href="">投身移动互联网：小人物的...</a> </div>
+<div class="position"><a href="<%=basePath %>">首页</a>><!-- <a href="">I'M Diors</a> > <a href="">Diors 发烧友</a> > -->  <a href="<%=basePath %>/fastThought/showList">发烧60S</a> > <a href="<%=basePath %>/fastThought/showDetail?Id=${fastThought.id}">${fastThought.thoughtTitle }</a> </div>
 
 <div class="content">
   <div class="content_left">
@@ -63,7 +36,7 @@
 		  <div class="tongcheng_title">
 		    <ul>
 			  <li style=" font-size:24px; color:#313131;">${fastThought.thoughtTitle }</li>
-			  <li>${fastThought.userId }  ${fastThought.createDt } <span style="float:right;"><a href="">评论</a> | <a href="">赞</a> | <a href="">收藏</a></span></li>
+			  <li>${fastThought.user.name }  ${fastThought.createDt } <span style="float:right;"><a href="">评论</a> | <a href="">赞</a> | <a href="">收藏</a></span></li>
 			</ul> 
 		  </div>
 		  <div class="tongcheng_detail_center">
@@ -71,16 +44,22 @@
 			${fastThought.context }
 		  </div>
 		  <div class="write">
-		    <form action="" method="get">
-			  <h3>评论<a href="">查看所有XX条评论</a></h3>
-			  <span>#1 arden 回复语2013-10-28 23:19 </span>
-			  <span>早上登不上，晚上没资格...</span>
-			  <span style="float:right; display:block;"><a href="">支持（1）</a>|<a href=""> 反对（1）</a>| <a href="">回复</a></span>
-			  <div class="u_opinion">
-			  <textarea cols="" rows="">有钱也别上百度接营销的当，不然就成冤大头了</textarea>
-			  <input type="button" value="发表" />
-			</div>
-			</form>
+
+			<div class="ds-thread" data-thread-key="${fastThought.id }"data-title="${fastThought.thoughtTitle }"></div>
+			<script type="text/javascript">
+				var duoshuoQuery = {
+					short_name : "diros"
+				};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';
+					ds.async = true;
+					ds.src = 'http://static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0] || document
+							.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
 		  </div>
 		</div>
 		<div class="news_center_bot"></div>
@@ -130,26 +109,7 @@
 	
 	<div class="talk">
 	  <h3>最新评论</h3>
-	  <dl>
-	    <dt><img src="<%=basePath %>images/pic04.jpg" /></dt>
-		<dd>rdj123 <font>回复语2013-10-26 03:41:18</font> <span>#1</span></dd>
-		<dd><a href="">我是被“富士康”吸引来的。富士康是什么东西？</a></dd>
-	  </dl>
-	  <dl>
-	    <dt><img src="<%=basePath %>images/pic04.jpg" /></dt>
-		<dd>rdj123 <font>回复语2013-10-26 03:41:18</font> <span>#1</span></dd>
-		<dd><a href="">我是被“富士康”吸引来的。富士康是什么东西？</a></dd>
-	  </dl>
-	  <dl>
-	    <dt><img src="<%=basePath %>images/pic04.jpg" /></dt>
-		<dd>rdj123 <font>回复语2013-10-26 03:41:18</font> <span>#1</span></dd>
-		<dd><a href="">我是被“富士康”吸引来的。富士康是什么东西？</a></dd>
-	  </dl>
-	  <dl>
-	    <dt><img src="<%=basePath %>images/pic04.jpg" /></dt>
-		<dd>rdj123 <font>回复语2013-10-26 03:41:18</font> <span>#1</span></dd>
-		<dd><a href="">我是被“富士康”吸引来的。富士康是什么东西？</a></dd>
-	  </dl>
+	  <ul class="ds-recent-comments" data-num-items="10"></ul>
 	</div>
 	
   </div>

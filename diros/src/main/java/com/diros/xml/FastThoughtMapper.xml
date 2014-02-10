@@ -22,8 +22,7 @@
 	<result property="replyDt" column="reply_dt"/>
 	<result property="status" column="status"/>
 	<result property="context" column="context"/>
-	<association property="user" column="user_id" javaType="User" resultMap="userResultMap">
-
+	<association property="user" column="user_id"  select="com.diros.mapper.UserMapper.findById">
 </association>
 
 </resultMap>
