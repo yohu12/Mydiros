@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import com.diros.mapper.UserMapper;
 import com.diros.model.User;
 import com.diros.service.UserService;
-import com.diros.util.EmailSender;
+//import com.diros.util.EmailSender;
 import com.diros.util.MD5Util;
 import com.diros.util.ServiceImpl;
 
@@ -69,7 +69,8 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService  {
 	}
 
 	@Override
-	public void register(User user) throws Exception {
+	public User register(User user) throws Exception {
+		User u=null;
 		try {
 			boolean flag = this.isUserNameAvailable(user.getName());
 			
@@ -87,6 +88,8 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService  {
 					+ user.getPword());
 			String subject = "diors - 注册激活";
 			String templatePath = "velocity/registerActivation.vm";
+			
+			u=this.basicLogin(user);
 			this.sendEmail(user.getName(), tmpValidateCode,
 					user.getEmail(), subject , templatePath);
 			
@@ -94,6 +97,7 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService  {
 			e.printStackTrace();
 			throw e;
 		}
+		return u;
 	}
 	
 	@Override
@@ -243,7 +247,7 @@ public class UserServiceImpl extends ServiceImpl<User> implements UserService  {
 			model.put("validateCode", validateCode);
 			String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, templatePath, "utf-8", model);
 
-			EmailSender.send(emailAddr, subject, text, "text/html");
+//			EmailSender.send(emailAddr, subject, text, "text/html");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.diros.mapper.FastThought">
+<mapper namespace="com.diros.mapper.FastThoughtMapper">
 
 <insert id="insert" parameterType="FastThought">
-	insert into farst_thought(thought_title,user_id,create_dt,last_mdy_dt,reply_dt,status,context)
+	insert into fast_thought(thought_title,user_id,create_dt,last_mdy_dt,reply_dt,status,context)
 		values ( 
 		#{thoughtTitle,jdbcType=VARCHAR},
-		#{userId,jdbcType=VARCHAR},
+		#{user.userId,jdbcType=VARCHAR},
 		#{createDT,jdbcType=dateTime},
 		#{lastMdyDt,jdbcType=dateTime},
 		#{replyDt,jdbcType=dateTime},
@@ -14,16 +14,31 @@
 		#{context,jdbcType=VARCHAR}
 		)
 </insert>
-<resultMap type="forum" id="forumResultMap">
+<resultMap type="FastThought" id="fastThoughtResultMap">
 	<id property="id" column="id" />  
     <result property="thoughtTitle" column="thought_title" />
-	<result property="userId" column="user_id" />
 	<result property="createDt" column="create_dt" />
 	<result property="lastMdyDt" column="last_mdy_dt"/>
 	<result property="replyDt" column="reply_dt"/>
 	<result property="status" column="status"/>
 	<result property="context" column="context"/>
+	<association property="user" column="user_id"  select="com.diros.mapper.UserMapper.findById">
+</association>
 
+</resultMap>
+<resultMap type="User" id="userResultMap">
+	<id property="userId" column="USER_ID" />  
+    <result property="name" column="NAME" />  
+    <result property="pword" column="PWORD" />
+	<result property="regiestDt" column="REGIEST_DT" />
+	<result property="lastLoginDt" column="LAST_LOGIN_DT" />
+	<result property="nickName" column="NICK_NAME" />
+	<result property="location" column="LOCATION" />
+	<result property="level" column="LEVEL" />
+	<result property="fansCount" column="FANS_COUNT" />
+	<result property="photo" column="PHOTO" />
+	<result property="email" column="email" />
+	<result property="state" column="u_state" />
 </resultMap>
 	<!-- 修改 -->
 	<update id="update" parameterType="FastThought">
@@ -53,12 +68,12 @@
 		delete from FORUM where id=#{id}
 	</delete>
 	<!-- 总查询 -->
-	<select id="selectAll" resultType="Forum">
-		select id id,thought_title, user_id, create_dt, last_mdy_dt, reply_dt, status, context  from farst_thought
+	<select id="selectAll" resultMap="fastThoughtResultMap">
+		select id id,thought_title, user_id, create_dt, last_mdy_dt, reply_dt, status, context  from fast_thought
 	</select>
 	<!-- 通过id查询 -->
-	<select id="findById" parameterType="int" resultType="Forum">
-		select * from farst_thought where id=#{id}
+	<select id="findById" parameterType="int" resultMap="fastThoughtResultMap">
+		select id id,thought_title, user_id, create_dt, last_mdy_dt, reply_dt, status, context from fast_thought where id=#{id}
 	</select>
 	<!-- 分页查询 -->
 	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
@@ -69,7 +84,7 @@
 	</select> -->
 	<!-- 查询总数 -->
 	<select id="count"  resultType="int">
-		select count(*) FROM farst_thought
+		select count(*) FROM fast_thought
 	</select>
 	<!-- 模糊查询包含分页 -->
 	<!-- <select id="selectByNameAndKey"  resultType="Bpm">

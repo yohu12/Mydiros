@@ -16,7 +16,7 @@
 			expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${driverClassName}" />
 		<property name="url" value="${url}" />
@@ -26,8 +26,18 @@
 		<property name="maxIdle" value="${maxIdle}" />
 		<property name="maxWait" value="${maxWait}" />
 		<property name="minIdle" value="${minIdle}" />
+	</bean> -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		>
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${uname}" />
+		<property name="password" value="${upwd}" />
+		<!-- <property name="maxActive" value="${maxActive}" />
+		<property name="maxIdle" value="${maxIdle}" />
+		<property name="maxWait" value="${maxWait}" />
+		<property name="minIdle" value="${minIdle}" /> -->
 	</bean>
-
 
 	<!-- 定义全局的事务控制 -->
 	<bean id="transactionManager"

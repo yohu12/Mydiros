@@ -5,9 +5,10 @@ public class Location {
 	private int id; 
 	private String title; //活动标题
 	private int place;//活动地点
+	private String createTime;//活动创建时间
 	private String startTime;//活动开始时间
 	private String endTime;//活动结束时间
-	private String detalis;//活动详情
+	private String details;//活动详情
 	private String label;//活动标签
 	private int initiator; //活动发起人id与用户表id相关联
 	private int state;//状态 判断当前活动是否即将开始或已经结束
@@ -32,6 +33,12 @@ public class Location {
 	public void setPlace(int place) {
 		this.place = place;
 	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
 	public String getStartTime() {
 		return startTime;
 	}
@@ -44,11 +51,11 @@ public class Location {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	public String getDetalis() {
-		return detalis;
+	public String getDetails() {
+		return details;
 	}
-	public void setDetalis(String detalis) {
-		this.detalis = detalis;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 	public String getLabel() {
 		return label;
@@ -83,15 +90,10 @@ public class Location {
 	@Override
 	public String toString() {
 		return "Location [id=" + id + ", title=" + title + ", place=" + place
-				+ ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", detalis=" + detalis + ", label=" + label + ", initiator="
-				+ initiator + ", state=" + state + ", type=" + type
-				+ ", posterImg=" + posterImg + "]";
-	}
-	
-	
-	
-	
-	
+				+ ", createTime=" + createTime + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", details=" + details + ", label="
+				+ label + ", initiator=" + initiator + ", state=" + state
+				+ ", type=" + type + ", posterImg=" + posterImg + "]";
+	}	
 	
 }

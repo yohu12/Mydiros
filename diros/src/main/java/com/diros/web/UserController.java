@@ -23,9 +23,14 @@ public class UserController extends TotalAction {
 	private UserService userService;
 	private User user;
 	private String msg;
-
+	private String appContext=null; 
+	
+	private String basePath=null; 
+	
+	
 	private boolean success;
 
+	
 	/**
 	 * 用户登录
 	 * @param user
@@ -37,6 +42,8 @@ public class UserController extends TotalAction {
 	@RequestMapping(value = "/login")
 	public String login(User user, ModelMap map, HttpServletRequest request,
 			HttpServletResponse response) {
+		appContext= request.getContextPath();
+		basePath= request.getScheme()+"://"+request.getServerName()+":"+ request.getServerPort() + appContext +"/";
 		System.out.println(user);
 		try {
 			Assert.notNull(user, "不能获取到用户登录信息！");
@@ -47,7 +54,7 @@ public class UserController extends TotalAction {
 			if (tmpUser != null) {
 				request.getSession().setAttribute("basicUser", tmpUser);
 				map.put("message", tmpUser);
-				return "/hiDiros";
+				return "redirect:"+basePath;
 			}
 		request.setAttribute("msg", "用户名或密码错误！");
 		} catch (Exception e) {
@@ -56,7 +63,7 @@ public class UserController extends TotalAction {
 			logger.debug(e.getMessage());
 			return "fail";
 		}
-		return "success";
+		return "redirect:"+basePath;
 	}
 
 	/**
@@ -79,7 +86,8 @@ public class UserController extends TotalAction {
 	@RequestMapping(value = "/register")
 	public String register(User user, ModelMap map, HttpServletRequest request,
 			HttpServletResponse response) {
-
+			appContext= request.getContextPath();
+			basePath= request.getScheme()+"://"+request.getServerName()+":"+ request.getServerPort() + appContext +"/";
 		try {
 
 			Assert.notNull(user, "不能获取到用户注册信息！");
@@ -88,18 +96,23 @@ public class UserController extends TotalAction {
 			Assert.hasText(user.getEmail(), "邮件不能为空！");
 			Assert.hasText(user.getNickName(), "昵称不能为空！");
 
-			userService.register(user);
+			User u=userService.register(user);
 			msg = "我们已向你提示的注册邮箱发送了注册激活码，请在48小时内激活。";
 			request.setAttribute("msg",msg);
 //			msg = "登录成功！";
 			success = true;
+			if(success && u !=null)
+			{
+				request.getSession().setAttribute("basicUser", u);
+			}
 		} catch (Exception e) {
 			msg = e.getMessage();
 			request.setAttribute("msg",msg);
 			logger.debug(e.getMessage());
 			return "fail";
 		}
-		return "success";
+		
+		return "redirect:"+basePath;
 	}
 
 	/**
@@ -295,9 +308,11 @@ public class UserController extends TotalAction {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletRequest request,
 			HttpServletResponse response) {
+		appContext= request.getContextPath();
+		basePath= request.getScheme()+"://"+request.getServerName()+":"+ request.getServerPort() + appContext +"/";
 		request.getSession().invalidate();
 		this.clear();
-		return "user/login";
+		return "redirect:"+basePath;
 	}
 
 	public User getUser() {

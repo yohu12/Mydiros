@@ -3,13 +3,15 @@
 <mapper namespace="com.diros.mapper.LocationMapper">
 
 <insert id="insert" parameterType="Location">
-	insert into LOCATION(title,place,start_time,end_time,details,label,initiator,state,type)
+	insert into LOCATION(title,place,create_time,start_time,end_time,details,label,initiator,state,type)
 		values ( 
 		#{title},
 		#{place},
+		#{createTime},
 		#{startTime},
 		#{endTime},
 		#{details},
+		#{label},
 		#{initiator},
 		#{state},		
 		#{type}
@@ -26,9 +28,12 @@
 			<if test="place != null">
 				place = #{place,jdbcType=DECIMAL},
 			</if>			
+			<if test="createTime != null">
+				start_time = #{cerateTime,jdbcType=DECIMAL},
+			</if>
 			<if test="startTime != null">
 				start_time = #{startTime,jdbcType=DECIMAL},
-			</if>			
+			</if>				
 			<if test="endTime != null">
 				end_time = #{endTime,jdbcType=DECIMAL},
 			</if>			
@@ -54,19 +59,16 @@
 	</delete>
 	<!-- 总查询 -->
 	<select id="selectAll" resultType="Location">
-		select id id, title title,place place, start_time startTime, end_time endTime, details details, initiator initiator, state state,type type from LOCATION
+		select id id, title title,place place, create_time createTime ,start_time startTime, end_time endTime, details details, initiator initiator, state state,type type from LOCATION
 	</select>
 	<!-- 通过id查询 -->
 	<select id="findById" parameterType="int" resultType="Location">
-		select * from LOCATION where id=#{id}
+		select id id, title title,place place, create_time createTime ,start_time startTime, end_time endTime, details details, initiator initiator, state state,type type from LOCATION where id=#{id}
 	</select>
 	<!-- 分页查询 -->
-	<!-- <select id="selectPage" parameterType="Paging" resultType="Tem"> 
- 	 <![CDATA[	SELECT * FROM (SELECT T.*,ROWNUM AS RN FROM(
-				select * from Tem order by id asc
-				) T WHERE  ROWNUM <= 10) WHERE RN > 1
- 	  ]]>
-	</select> -->
+	 <select id="selectPage" parameterType="Paging" resultType="Location"> 
+ 	 	select id id, title title,place place, create_time createTime ,start_time startTime, end_time endTime, details details, initiator initiator, state state,type type from location  order by id limit #{startRow},#{counts} 
+	</select>
 	<!-- 查询总数 -->
 	<select id="count"  resultType="int">
 		select count(*) FROM LOCATION

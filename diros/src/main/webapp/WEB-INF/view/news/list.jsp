@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
 <link rel="stylesheet" type="text/css" href="<%=basePath %>css/style.css" />
+<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
  <!-- Duoshuo Comment BEGIN -->
 			<script type="text/javascript">
 				var duoshuoQuery = {
@@ -49,6 +50,7 @@
 	  <div class="bg_fir_news"></div>
 	  <div class="news_center">
 	    <div class="news_center_top"></div>
+	    <form action="<%=basePath%>news/list" method="get">
 		<div class="news_center_detail">
 		  <div class="news_centersort">
 		    <a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">美剧</a><a href="">日剧</a><a href="">谢耳朵</a><a href="">日剧</a><a href="">美剧</a>
@@ -58,29 +60,17 @@
 		    <dl>
 			  <dt><a href=""><img src="<%=basePath%>images/pic04.jpg" /></a></dt>
 			  <dd><a href="<%=basePath%>news/content/${news.id}">${news.title}</a><span class="one_floot">#1</span></dd>
-			  <dd>如果你结婚的那天新娘不是我，我就会把我们的那些暧昧的聊天记录、短信...</dd>
+			  <dd></dd>
 			  <dd>arden <font style="color:#a0a0a0;">${news.createTime}</font> <span><a href=""><span class="ds-thread-count" data-thread-key="${news.id}"></span></a></span></dd>
 			</dl>
 			</c:forEach>
 		  </div>
 		  <div class="news_page">
-		    <a href="">首页</a> <a href="">上一页</a>
-	  <a href="">1</a>
-	  <a href="">2</a>
-	  <a href="">3</a>
-	  <a href="">4</a>
-	  <a href="">5</a>
-	  <a href="">6</a>
-	  <a href="">7</a>
-	  <a href="">8</a>
-	  <a href="">9</a>
-	  <a href="">10</a>
-	  <a href="">......</a>
-	  <a href="">103</a><a href="">104</a>
-	  <a href="">下一页</a><a href="">尾页</a>共<a href="">104</a>页 第<a href="" style="color:#057c08;">5</a>页 <a href="">跳转</a>
+				<jsp:include page="/common/pagemodel.jsp"/>
 		  </div>
 		  
 		</div>
+		</form>
 		<div class="news_center_bot"></div>
 	  </div>
 	  <div class="bg_sen_news">NEWS</div>

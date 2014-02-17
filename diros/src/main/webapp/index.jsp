@@ -11,7 +11,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>无标题文档</title>
+<title>中国屌丝网</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <script src="js/jquery-1.8.3.js" type="text/javascript"></script>
 <script src="js/slideshow.js" type="text/javascript"></script>
@@ -87,7 +87,7 @@
 										SetCookie("class", className, 30);
 									});
 						});
-				
+
 		$("#name_text").click(function(){	
 			$(this).val("");
 		});	
@@ -96,7 +96,7 @@
 				$(this).val("用户名/邮箱");
 			}
 		});	
-		
+
 		$("#pword_text").click(function(){			
 			$(this).val("");
 		});	
@@ -105,7 +105,7 @@
 				$(this).val("在此键入密码");
 			}
 		});	
-				
+
 	});
 	function getCookie(name)//取cookies函数       
 	{
@@ -120,8 +120,8 @@
 		}
 		return null;
 	}
-		
-	
+
+
 </script>
 <style>
 body {
@@ -144,7 +144,7 @@ body {
 	<div class="main">
 		<div class="main_content">
 			<div class="weather">
-				<div class="city">
+				<!-- <div class="city">
 					<div class="city_name">
 						<a href="" class="cd">成都</a> <a href="" class="citymore"><img
 							src="images/city_more.gif" /></a>
@@ -172,13 +172,14 @@ body {
 									align="left" /> 13~20℃</span> 明天 12月5日 周四</li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
+				<iframe width="500" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=19&bgc=%23&icon=1&temp=1&num=2"></iframe>
 				<div style="clear: both"></div>
 			</div>
 			<div class="main_content_left">
 				<ul>
 					<li class="dis"><a href="">I'm Diors</a></li>
-					<li class="dis dis_cs"><a href="">�丝测试</a></li>
+					<li class="dis dis_cs"><a href="<%=basePath %>/news/list">�丝测试</a></li>
 					<li class="dis_new"><a href="">News</a></li>
 					<li class="dis_show"><a href="">�丝秀</a></li>
 					<li class="dis dis_fs"><a href="">�丝发烧</a></li>

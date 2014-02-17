@@ -18,7 +18,7 @@ public interface UserService extends IService<User> {
 	 * @param user
 	 * @throws Exception
 	 */
-	public void register(User user) throws Exception;
+	public User register(User user) throws Exception;
 	
 	/**
 	 * 注册激活
